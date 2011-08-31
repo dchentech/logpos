@@ -15,6 +15,10 @@ class Logpos
     @time_parser = proc {|line| line.match(/^Started/) && TIME_PARSER_CLASS.parse(line.split(/for [0-9\.]* at /)[-1]) }
   end
 
+  def self.seek_pos_before log_path, lastest_visited_at
+    Logpos.new.seek_pos_before log_path, lastest_visited_at
+  end
+
   def seek_pos_before log_path, lastest_visited_at
     ta = TripleArray.new lastest_visited_at
 
