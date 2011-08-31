@@ -9,7 +9,6 @@ Use binary search to seek a position in logs
 == FEATURES/PROBLEMS:
 
 * Custome Time format
-* Multiple log files support
 
 == SYNOPSIS:
 
@@ -32,7 +31,7 @@ and generate the RDoc.
 
 (The MIT License)
 
-Copyright (c) 2011 FIX
+Copyright (c) 2011 eoe, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
