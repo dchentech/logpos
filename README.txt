@@ -4,7 +4,7 @@
 
 == DESCRIPTION:
 
-Use binary search to seek a position in logs, see http://mvj3.github.com/2011/09/17/use-binary-search-to-seek-a-position-in-rails-logs
+Use binary search to seek a position in logs.
 
 == FEATURES/PROBLEMS:
 
