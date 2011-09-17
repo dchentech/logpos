@@ -4,13 +4,21 @@
 
 == DESCRIPTION:
 
-Use binary search to seek a position in logs
+Use binary search to seek a position in logs, see http://mvj3.github.com/2011/09/17/use-binary-search-to-seek-a-position-in-rails-logs
 
 == FEATURES/PROBLEMS:
 
 * Custome Time format
 
 == SYNOPSIS:
+
+require 'logpos'
+
+pos = Logpos.seek_pos_before log_path, time
+# or
+lg = Logpos.new
+lg.time_parser = proc {|line| line.match(/^Started/) && TIME_PARSER_CLASS.parse(line.split(/for [0-9\.]* at /)[-1]) }
+pos = lg.seek_pos_before log_path, time
 
 == REQUIREMENTS:
 

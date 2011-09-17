@@ -12,7 +12,8 @@ require 'hoe'
 Hoe.spec 'logpos' do
   developer('mvj3', 'mvjome@gmail.com')
 
-  # self.rubyforge_name = 'logposx' # if different than 'logpos'
+  require 'logpos'
+  version = Logpos::VERSION
 end
 
 # vim: syntax=ruby
