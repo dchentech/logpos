@@ -1,5 +1,5 @@
 class Logpos
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 
   begin; require 'chronic'; rescue LoadError; end
   TIME_PARSER_CLASS = if defined? Chronic
