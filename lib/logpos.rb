@@ -1,5 +1,5 @@
 class Logpos
-  VERSION = '1.0.1'
+  VERSION = '1.0.2'
 
   begin; require 'chronic'; rescue LoadError; end
   TIME_PARSER_CLASS = if defined? Chronic
@@ -15,21 +15,22 @@ class Logpos
     @time_parser = proc {|line| line.match(/^Started/) && TIME_PARSER_CLASS.parse(line.split(/for [0-9\.]* at /)[-1]) }
   end
 
-  def self.seek_pos_before log_path, lastest_visited_at
-    Logpos.new.seek_pos_before log_path, lastest_visited_at
+  def self.seek_pos_before file_path, lastest_visited_at
+    Logpos.new.seek_pos_before file_path, lastest_visited_at
   end
 
-  def seek_pos_before log_path, lastest_visited_at
+  def seek_pos_before file_path, lastest_visited_at
     ta = TripleArray.new lastest_visited_at
 
-    log = File.open(log_path)
-    pos_start, pos_end = 0, File.size(log)
+    @file ||= File.open(file_path)
+    @file.reopen(file_path)
+    pos_start, pos_end = 0, File.size(@file)
     pos_mid = pos_end / 2
     time = Time.at(0)
     between = -1.0/0
 
     loop do
-      pos_mid, time = seek_log_pos(log, pos_mid)
+      pos_mid, time = seek_log_pos(@file, pos_mid)
       break if time.nil? || (pos_mid == pos_end)
 
       time_valid = lastest_visited_at >= time
@@ -45,20 +46,21 @@ class Logpos
         pos_mid = (pos_mid + pos_start) / 2
       end
     end
+    @file.close
 
     return ta.oldest.pos
   end
 
   private
-  def seek_log_pos log, pos
-    log.seek pos
-    log_size = File.size(log)
+  def seek_log_pos file, pos
+    file.seek pos
+    file_size = File.size(file)
 
     loop do
-      line = log.gets.to_s.strip!.to_s
-      return log_size if log.pos >= log_size
+      line = file.gets.to_s.strip!.to_s
+      return file_size if file.pos >= file_size
       next if (time = @time_parser.call(line)).nil?
-      return [log.pos, time]
+      return [file.pos, time]
     end
   end
 
