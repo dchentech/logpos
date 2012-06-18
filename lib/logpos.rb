@@ -1,5 +1,5 @@
 class Logpos
-  VERSION = '1.0.3'
+  VERSION = '1.0.4'
 
   begin; require 'chronic'; rescue LoadError; end
   TIME_PARSER_CLASS = if defined? Chronic
@@ -31,7 +31,7 @@ class Logpos
 
     loop do
       pos_mid, time = seek_log_pos(@file, pos_mid)
-      break if time || time.nil? || (pos_mid == pos_end)
+      break if !time || time.nil? || (pos_mid == pos_end)
 
       time_valid = lastest_visited_at >= time
       break if time_valid && ((lastest_visited_at - time) >= between.abs)
