@@ -12,13 +12,19 @@ Use binary search to seek a position in logs.
 
 == SYNOPSIS:
 
+```ruby
 require 'logpos'
 
 pos = Logpos.seek_pos_before log_path, time
+```
+
 # or
+
+```ruby
 lg = Logpos.new
 lg.time_parser = proc {|line| line.match(/^Started/) && TIME_PARSER_CLASS.parse(line.split(/for [0-9\.]* at /)[-1]) }
 pos = lg.seek_pos_before log_path, time
+```
 
 == REQUIREMENTS:
 
