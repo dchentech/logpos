@@ -60,7 +60,9 @@ class Logpos
       line = file.gets.to_s.strip!.to_s
       return file_size if file.pos >= file_size
       next if (time = @time_parser.call(line)).nil?
-      return [file.pos, time]
+      result = [file.pos, time]
+      puts result.inspect if ENV['DEBUG']
+      return result
     end
   end
 
